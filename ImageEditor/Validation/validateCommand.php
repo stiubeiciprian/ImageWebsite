@@ -28,18 +28,18 @@ function validateCommand(array $payload) : array
     }
 
     // Validate input file
-    if (!file_exists($payload['input-file'])) {
+    if (isset($payload['input-file']) && !file_exists($payload['input-file'])) {
         $errors[] = ERROR_IMAGE_FILE;
-    } elseif (validMimeType($payload['input-file'])) {
+    } elseif (isset($payload['input-file']) && validMimeType($payload['input-file'])) {
         $errors[] = ERROR_FILE_TYPE;
     }
 
 
     // Validate output file
-    if (!validFilePath($payload['output-file'])) {
+    if (isset($payload['output-file']) && !validFilePath($payload['output-file'])) {
         $errors[] = ERROR_SAVE_IMAGE;
     }
-    elseif (!validFileType($payload['output-file'])) {
+    elseif (isset($payload['output-file']) && !validFileType($payload['output-file'])) {
         $errors[] = ERROR_FILE_TYPE;
     }
 

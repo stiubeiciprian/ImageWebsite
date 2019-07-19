@@ -1,0 +1,18 @@
+Supported arguments: 
+
+--input-file -(required argument) path to the file 
+(ex: --input-file=/home/username/images/img.jpg)
+
+--output-file -(required argument) path of the target file
+(ex: --output-file=/home/username/resized_images/img.jpg)
+
+--width -(optional parameter) the output image will have the given width while respecting either the original aspect ratio, or the one given in the --format argument
+
+--height -(optional parameter) the output image will have the given height while respecting either the original aspect ratio, or the one given in the --format argument
+
+--format -(optional parameter) the output image must have the given aspect ratio
+
+--watermark -(optional parameter) the output image must have the given watermark image in a random corner
+
+--help -(optional parameter) a list with all possible arguments will be displayed explaining the usage of each one
+

@@ -1,8 +1,9 @@
 <?php
 
+
 function showHelp() {
 
-    $helpMessage = 'Help'.PHP_EOL;
+    $helpMessage = file_get_contents('help.txt', true);
 
-    print $helpMessage;
+    print $helpMessage.PHP_EOL;
 }

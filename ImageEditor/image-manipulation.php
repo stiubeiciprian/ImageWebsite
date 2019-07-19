@@ -21,7 +21,7 @@ function main($argc, $argv) {
     $payload = convertCLInputToPayload($argc,$argv);
 
 
-    if( isHelp($payload) == NULL ) {
+    if( isHelp($payload) ) {
         showHelp();
         return;
     }
