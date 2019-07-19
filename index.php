@@ -1,4 +1,4 @@
 <?php
 
-//header("Location: upload-image.php");
-//die();
+header("Location: upload-image.php");
+die();

@@ -1,6 +1,3 @@
-<?php
- ?>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -16,7 +13,7 @@
 
       <hr>
 
-      <form action="//upload-image.php" method="post" enctype="multipart/form-data">
+      <form action="actions/upload-image.php" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
           <label for="user-name">Name</label>
@@ -27,7 +24,7 @@
 
         <div class="form-group">
           <label for="email">Email address</label>
-          <input type="email" class="form-control" name="email" placeholder="Enter email">
+          <input type="email" class="form-control" name="user-email" placeholder="Enter email">
         </div>
 
 
