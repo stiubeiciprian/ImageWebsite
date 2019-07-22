@@ -1,6 +1,4 @@
-# Read Me
-
-(WEB-VANILLA) Simple 2 page website
+# (WEB-VANILLA) Simple 2 page website
 
 Our client just accepted our tool and pushed forward with the project. YAAY! She now wants to give early access to the artists to upload artwork before the application goes live in order to have sellable products when the big launch is scheduled. 
 
