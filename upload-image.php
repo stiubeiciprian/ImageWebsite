@@ -1,3 +1,10 @@
+<?php
+include_once  "validations.php";
+
+var_dump($_GET);
+
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -52,14 +59,14 @@
 
         <div class="form-group">
           <label for="image-price">Price</label>
-          <input type="text" class="form-control" name="image-price"  placeholder="Price">
+          <input type="text" class="form-control" id="image-price" name="image-price"  placeholder="Price">
         </div>
 
 
 
         <div class="form-group">
           <label for="image-tags">Select tags</label>
-          <select multiple class="form-control" name="image-tags">
+          <select multiple class="form-control" id="image-tags" name="image-tags[]">
             <option>1</option>
             <option>2</option>
             <option>3</option>

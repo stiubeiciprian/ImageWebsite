@@ -39,7 +39,7 @@ function extractImageDataFromJSON(string $filePath) : array
 function displayImageData(array $imageData) : void
 {
     foreach ($imageData as $key=>$value){
-        echo "<p><b>{$key}:</b> {$value}</p>";
+        print "<p><b>{$key}:</b> {$value}</p>";
     }
 }
 

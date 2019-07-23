@@ -3,3 +3,6 @@
 *.png
 .idea
 *.json
+vendor
+data
+composer.*+
