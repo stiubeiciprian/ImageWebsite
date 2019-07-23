@@ -1,7 +1,16 @@
 <?php
-include_once  "validations.php";
+include_once "constants.php";
 
-var_dump($_GET);
+
+const ERROR_MESSAGE_USER_NAME = "User name is not valid!";
+const ERROR_MESSAGE_USER_EMAIL = "Email is not valid!";
+const ERROR_MESSAGE_IMAGE_NAME = "Image title is not valid!";
+const ERROR_MESSAGE_IMAGE_DESCRIPTION = "Image description cannot be empty!";
+const ERROR_MESSAGE_IMAGE_CAMERA_SPECS = "Camera specs cannot be empty!";
+const ERROR_MESSAGE_IMAGE_PRICE = "Given price is not a number!";
+const ERROR_MESSAGE_IMAGE_TAGS = "Image tags cannot be empty!";
+const ERROR_MESSAGE_IMAGE_DATE = "Image date cannot be empty!";
+
 
 ?>
 
@@ -25,6 +34,13 @@ var_dump($_GET);
         <div class="form-group">
           <label for="user-name">Name</label>
           <input type="text" class="form-control" name="user-name"  placeholder="Name">
+            <?php
+
+                if(isset($_GET[USER_NAME]))
+                {
+                    echo "<p class='form-input-error'>".ERROR_MESSAGE_USER_NAME."</p>";
+                }
+                ?>
         </div>
 
 
@@ -32,6 +48,12 @@ var_dump($_GET);
         <div class="form-group">
           <label for="email">Email address</label>
           <input type="email" class="form-control" name="user-email" placeholder="Enter email">
+            <?php
+            if(isset($_GET[USER_EMAIL]))
+            {
+            echo "<p class='form-input-error'>".ERROR_MESSAGE_USER_EMAIL."</p>";
+            }
+            ?>
         </div>
 
 
@@ -39,6 +61,13 @@ var_dump($_GET);
         <div class="form-group">
           <label for="image-title">Image title</label>
           <input type="text" class="form-control" name="image-title"  placeholder="Image title">
+            <?php
+
+            if(isset($_GET[IMAGE_NAME]))
+            {
+            echo "<p class='form-input-error'>".ERROR_MESSAGE_IMAGE_NAME."</p>";
+            }
+            ?>
         </div>
 
 
@@ -46,6 +75,12 @@ var_dump($_GET);
         <div class="form-group">
           <label for="image-description">Image description</label>
           <textarea rows="8" cols="80" class="form-control" name="image-description"  placeholder="Image description"> </textarea>
+            <?php
+            if(isset($_GET[IMAGE_DESCRIPTION]))
+            {
+            echo "<p class='form-input-error'>".ERROR_MESSAGE_IMAGE_DESCRIPTION."</p>";
+            }
+            ?>
         </div>
 
 
@@ -53,6 +88,12 @@ var_dump($_GET);
         <div class="form-group">
           <label for="camera-specs">Camera specs</label>
           <input type="text" class="form-control" name="camera-specs"  placeholder="Camera specs">
+            <?php
+            if(isset($_GET[IMAGE_CAMERA_SPECS]))
+            {
+            echo "<p class='form-input-error'>".ERROR_MESSAGE_IMAGE_CAMERA_SPECS."</p>";
+            }
+            ?>
         </div>
 
 
@@ -60,6 +101,12 @@ var_dump($_GET);
         <div class="form-group">
           <label for="image-price">Price</label>
           <input type="text" class="form-control" id="image-price" name="image-price"  placeholder="Price">
+            <?php
+            if(isset($_GET[IMAGE_PRICE]))
+            {
+            echo "<p class='form-input-error'>".ERROR_MESSAGE_IMAGE_PRICE."</p>";
+            }
+            ?>
         </div>
 
 
@@ -73,6 +120,12 @@ var_dump($_GET);
             <option>4</option>
             <option>5</option>
           </select>
+            <?php
+            if(isset($_GET[IMAGE_TAGS]))
+            {
+                echo "<p class='form-input-error'>".ERROR_MESSAGE_IMAGE_TAGS."</p>";
+            }
+            ?>
         </div>
 
 
@@ -80,11 +133,18 @@ var_dump($_GET);
         <div class="form-group">
           <label for="image-date">Image capture date</label>
           <input type="date" class="form-control" name="image-date">
+            <?php
+                if(isset($_GET[IMAGE_DATE]))
+                {
+                echo "<p class='form-input-error'>".ERROR_MESSAGE_IMAGE_DATE."</p>";
+                }
+            ?>
         </div>
 
 
         <div class="input-group mb-3">
             <input type="file" class="image-file" name="image-file">
+
         </div>
 
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>

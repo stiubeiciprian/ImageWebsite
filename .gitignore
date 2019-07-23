@@ -5,4 +5,4 @@
 *.json
 vendor
 data
-composer.*+
+composer.*
