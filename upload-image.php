@@ -76,19 +76,8 @@
         </div>
 
 
-        <!-- <div class="input-group mb-3">
-          <div class="custom-file">
-            <input type="file" class="image-file" id="image-file">
-            <label class="custom-file-label" for="image-file">Choose image file</label>
-          </div>
-        </div> -->
-
-
         <div class="input-group mb-3">
-
             <input type="file" class="image-file" name="image-file">
-
-
         </div>
 
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
