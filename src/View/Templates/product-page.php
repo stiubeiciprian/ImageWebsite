@@ -1,9 +1,3 @@
-<?php
-
-var_dump($product);
-
-?>
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -14,6 +8,12 @@ var_dump($product);
     <title>Product</title>
 </head>
 <body>
+
+<?php
+
+var_dump($product);
+
+?>
 
 </body>
 </html>
