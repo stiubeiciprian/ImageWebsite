@@ -1,5 +1,5 @@
 <?php
-include_once "constants.php";
+require_once "constants.php";
 
 
 const ERROR_MESSAGE_USER_NAME = "User name is not valid!";

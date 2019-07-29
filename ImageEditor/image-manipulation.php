@@ -1,19 +1,17 @@
 <?php
-
-
-include_once "Input/CLI.php";
-include_once "IsHelp/isHelp.php";
-include_once "Validation/validateCommand.php";
-include_once "LoadImage/readImage.php";
-include_once "Operations/width.php";
-include_once "Operations/height.php";
-include_once "Operations/ratio.php";
-include_once "AddWatermark/watermark.php";
-include_once "SaveImage/saveImage.php";
-include_once "Errors/arrayToString.php";
-include_once "Output/showError.php";
-include_once "Output/showHelp.php";
-include_once "Output/showSuccess.php";
+require_once "Input/CLI.php";
+require_once "IsHelp/isHelp.php";
+require_once "Validation/validateCommand.php";
+require_once "LoadImage/readImage.php";
+require_once "Operations/width.php";
+require_once "Operations/height.php";
+require_once "Operations/ratio.php";
+require_once "AddWatermark/watermark.php";
+require_once "SaveImage/saveImage.php";
+require_once "Errors/arrayToString.php";
+require_once "Output/showError.php";
+require_once "Output/showHelp.php";
+require_once "Output/showSuccess.php";
 
 
 function main($argc, $argv) {

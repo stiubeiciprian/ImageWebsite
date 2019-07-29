@@ -1,9 +1,7 @@
 <?php
 
-ini_set("display_errors", "on");
-
-include_once "../constants.php";
-include_once "../validations.php";
+require_once "../constants.php";
+require_once "../validations.php";
 
 
 /**
