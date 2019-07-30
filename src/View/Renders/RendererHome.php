@@ -22,7 +22,11 @@ class RendererHome extends  AbstractRender
      */
     public function render()
     {
+
+        require_once "src/View/Templates/header.php";
         $productList = $this->productList;
         require_once "src/View/Templates/home-page.php";
+
+        require_once "src/View/Templates/footer.php";
     }
 }

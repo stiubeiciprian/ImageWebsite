@@ -28,9 +28,11 @@ class RenderProduct extends AbstractRender
     /**
      *  Renders the page with the product and tier information.
      */
-    public function render() : void
+    public function render()
     {
         $product = $this->product;
+        require_once "src/View/Templates/header.php";
         require_once "src/View/Templates/product-page.php";
+        require_once "src/View/Templates/footer.php";
     }
 }

@@ -26,7 +26,9 @@ class Request
     public function __construct()
     {
         $this->url = $_SERVER["REQUEST_URI"];
+        $this->method = $_SERVER["REQUEST_METHOD"];
         $this->query = $_GET;
+        $this->post = $_POST;
     }
 
     /**
@@ -43,5 +45,21 @@ class Request
     public function getQuery() : array
     {
         return $this->query;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPost() : array
+    {
+        return $this->post;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod() : string
+    {
+        return $this->method;
     }
 }

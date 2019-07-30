@@ -9,7 +9,8 @@ class RenderLoginForm extends AbstractRender
 {
     public function render()
     {
-        // TODO: Implement render() method.
+        require_once "src/View/Templates/header.php";
         require_once "src/View/Templates/login-form.php";
+        require_once "src/View/Templates/footer.php";
     }
 }

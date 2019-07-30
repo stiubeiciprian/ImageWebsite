@@ -4,6 +4,8 @@
 namespace App\Controller;
 
 
+use App\Core\Request;
+use App\Core\Session;
 use App\Model\Domain\Product;
 use App\Model\Domain\Tier;
 use App\Model\Persistence\PersistenceFactory;
@@ -16,30 +18,37 @@ use App\View\Renders\RenderProduct;
  */
 class ProductController
 {
+    /**
+     * @var Request
+     */
+    private $request;
 
     /**
-     * @var PersistenceFactory
+     * @var Session
      */
-    private $persistence;
+    private $session;
+
 
 
     /**
-     * ProductController constructor.
+     * UserController constructor.
      */
-    public function __construct()
+    public function __construct(Request $request, Session $session)
     {
-        $this->persistence = new PersistenceFactory();
+        $this->request = $request;
+        $this->session = $session;
     }
 
+
     /**
-     *
+     *  Display products page.
      */
     public function showProducts() : void
     {
 
         //$product = new Product(1,1,"Image", "Description", ['tag1','tag2'],'cameraSpecs', 'date', 'path');
 
-        $productFinder = $this->persistence->createFinder(Product::class);
+        $productFinder = PersistenceFactory::createFinder(Product::class);
         $productList = $productFinder->getAll();
 
         $renderer = new RendererHome($productList);
@@ -47,7 +56,7 @@ class ProductController
     }
 
     /**
-     * Show product page with requested id.
+     * Display product page with requested id.
      */
     public function showProduct() : void
     {
@@ -58,7 +67,7 @@ class ProductController
     }
 
     /**
-     *
+     * Buy product.
      */
     public function buyProduct()
     {

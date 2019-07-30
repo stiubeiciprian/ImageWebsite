@@ -1,7 +1,14 @@
 <?php
 
+// Session
+const SESSION_USER_ID = "userId";
+
+// User data
 const USER_NAME = "user-name";
 const USER_EMAIL = "user-email";
+const USER_PASSWORD = "user-password";
+
+// Image data
 const IMAGE_FILE = "image-file";
 const IMAGE_NAME = "image-title";
 const IMAGE_DESCRIPTION = "image-description";
@@ -10,9 +17,10 @@ const IMAGE_PRICE = "image-price";
 const IMAGE_TAGS = "image-tags";
 const IMAGE_DATE = "image-date";
 
-
+//Paths
 const RELATIVE_PATH_TO_USERS_FILES = "../data/users/";
 const FULL_PATH_TO_USERS_FILES = "/var/www/my-application/data/users/";
+
 
 const IMAGE_DATA_TO_STORE = [IMAGE_NAME, IMAGE_DESCRIPTION, IMAGE_CAMERA_SPECS, IMAGE_PRICE, IMAGE_DATE, IMAGE_TAGS];
 const USER_JSON_FILE = "user_data.json";
