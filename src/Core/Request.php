@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Router;
+namespace App\Core;
 
 /**
  * Class Request
- * @package App\Router
+ * @package App\Core
  */
 class Request
 {

@@ -1,13 +1,11 @@
 <?php
 
 
-namespace App\Router;
-
-use App\Router\Request;
+namespace App\Core;
 
 /**
- * Class Router
- * @package App\Router
+ * Class Core
+ * @package App\Core
  */
 class Router
 {
@@ -17,8 +15,8 @@ class Router
     private $request;
 
     /**
-     * Router constructor.
-     * @param \App\Router\Request $request
+     * Core constructor.
+     * @param \App\Core\Request $request
      */
     public function __construct(Request $request)
     {

@@ -3,6 +3,8 @@
 
 namespace App\Controller;
 
+use App\Model\Domain\User;
+use App\Model\Persistence\PersistenceFactory;
 use App\View\Renders\RenderLoginForm;
 use App\View\Renders\RenderProfile;
 use App\View\Renders\RenderRegisterForm;
@@ -14,11 +16,16 @@ use App\View\Renders\RenderRegisterForm;
 class UserController
 {
     /**
+     * @var PersistenceFactory
+     */
+    private $persistence;
+
+    /**
      * UserController constructor.
      */
     public function __construct()
     {
-
+        $this->persistence = new PersistenceFactory();
     }
 
 
@@ -36,6 +43,7 @@ class UserController
      */
     public function logout() : void
     {
+        unset($_SESSION);
     }
 
     /**
@@ -52,6 +60,13 @@ class UserController
      */
     public function showUploads()
     {
+        $user = new User(1, '', '', '');
+
+        $userFinder = $this->persistence->createFinder(User::class);
+
+        $user = $userFinder->findById($user->getId());
+
+
         $renderer = new RenderProfile();
         $renderer->render();
     }
@@ -59,7 +74,7 @@ class UserController
     /**
      *
      */
-    public function showOrders()
+    public function showOrders() : void
     {
         $renderer = new RenderProfile();
         $renderer->render();

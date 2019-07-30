@@ -3,8 +3,8 @@ ini_set('display_errors', 'On');
 
 require_once "vendor/autoload.php";
 
-use App\Router\Request;
-use App\Router\Router;
+use App\Core\Request;
+use App\Core\Router;
 
 use App\Controller\ProductController;
 use App\Controller\UserController;

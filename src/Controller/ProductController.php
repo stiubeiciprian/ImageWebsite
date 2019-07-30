@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Model\Domain\Product;
 use App\Model\Domain\Tier;
+use App\Model\Persistence\PersistenceFactory;
 use App\View\Renders\RendererHome;
 use App\View\Renders\RenderProduct;
 
@@ -17,10 +18,17 @@ class ProductController
 {
 
     /**
+     * @var PersistenceFactory
+     */
+    private $persistence;
+
+
+    /**
      * ProductController constructor.
      */
     public function __construct()
     {
+        $this->persistence = new PersistenceFactory();
     }
 
     /**
@@ -29,17 +37,17 @@ class ProductController
     public function showProducts() : void
     {
 
-        $product = new Product(1,1,"Image", "Description", ['tag1','tag2'],'cameraSpecs', 'date', 'path');
+        //$product = new Product(1,1,"Image", "Description", ['tag1','tag2'],'cameraSpecs', 'date', 'path');
 
-        $productList = [$product, $product];
-
+        $productFinder = $this->persistence->createFinder(Product::class);
+        $productList = $productFinder->getAll();
 
         $renderer = new RendererHome($productList);
         $renderer->render();
     }
 
     /**
-     *
+     * Show product page with requested id.
      */
     public function showProduct() : void
     {
