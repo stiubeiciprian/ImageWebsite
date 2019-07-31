@@ -8,8 +8,8 @@ return [
     // Product actions
     "/products" => [$productController, 'showProducts'],
     "/product" => [$productController, 'showProduct'],
-    "/product/upload" => [$productController, 'upload'],
-    "/product/buy" => [$productController, 'buy'],
+    "/product/upload" => [$productController, 'uploadProduct'],
+    "/product/buy" => [$productController, 'buyProduct'],
 
     // User actions
     "/user/login" => [$userController, 'login'],

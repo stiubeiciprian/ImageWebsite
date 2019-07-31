@@ -9,15 +9,6 @@ namespace App\Core;
  */
 class Router
 {
-    /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * @var Session
-     */
-    private $session;
 
     /**
      * @var mixed
@@ -28,10 +19,8 @@ class Router
      * Core constructor.
      * @param \App\Core\Request $request
      */
-    public function __construct(Request $request, Session $session, array $urlMap)
+    public function __construct(array $urlMap)
     {
-        $this->request = $request;
-        $this->session = $session;
         $this->urlMap = $urlMap;
     }
 
@@ -40,7 +29,7 @@ class Router
      */
     public function redirect() : void
     {
-        $uri = $this->request->getUrl();
+        $uri = Request::getUrl();
 
         if( isset($this->urlMap[$uri]) && in_array($uri, $this->urlMap)) {
             call_user_func($this->urlMap[$uri]);

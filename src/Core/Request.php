@@ -10,56 +10,42 @@ namespace App\Core;
 class Request
 {
     /**
-     * @var string
-     */
-    private $url;
-
-    /**
-     * @var array
-     */
-    private $query;
-
-
-    /**
-     * Request constructor.
-     */
-    public function __construct()
-    {
-        $this->url = $_SERVER["REQUEST_URI"];
-        $this->method = $_SERVER["REQUEST_METHOD"];
-        $this->query = $_GET;
-        $this->post = $_POST;
-    }
-
-    /**
      * @return string
      */
-    public function getUrl() : string
+    public static function getUrl() : string
     {
-        return $this->url;
+        return $_SERVER["REQUEST_URI"];
     }
 
     /**
      * @return array
      */
-    public function getQuery() : array
+    public static function getQuery() : array
     {
-        return $this->query;
+        return  $_GET;
     }
 
     /**
      * @return array
      */
-    public function getPost() : array
+    public static function getPost() : array
     {
-        return $this->post;
+        return $_POST;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getFiles() : array
+    {
+        return $_FILES;
     }
 
     /**
      * @return string
      */
-    public function getMethod() : string
+    public static function getMethod() : string
     {
-        return $this->method;
+        return  $_SERVER["REQUEST_METHOD"];
     }
 }

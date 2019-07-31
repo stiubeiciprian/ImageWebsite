@@ -23,7 +23,7 @@ class Session
     /**
      * Initialize session.
      */
-    public function openSession()
+    public static function openSession()
     {
         session_start();
     }
@@ -32,7 +32,7 @@ class Session
      * @param string $key
      * @param string $value
      */
-    public function setSessionValue(string $key, string $value)
+    public static function setSessionValue(string $key, string $value)
     {
         $_SESSION[$key] = $value;
     }
@@ -42,25 +42,25 @@ class Session
      * @param string $key
      * @return mixed
      */
-    public function getSessionValue(string $key) : mixed
+    public static function getSessionValue(string $key) : mixed
     {
         return $_SESSION[$key];
     }
 
     /**
-     * Checks if the session is set.
+     * Checks if the session key is set.
      * @return bool
      */
-    public function isSessionSet() : bool
+    public static function isSessionKeySet(string $key) : bool
     {
-        return isset($_SESSION);
+        return isset($_SESSION[$key]);
     }
 
     /**
      * Unset session.
      */
-    public function closeSession()
+    public static function closeSession()
     {
-        unset($_SESSION);
+        session_destroy();
     }
 }
