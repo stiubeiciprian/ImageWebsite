@@ -1,8 +1,19 @@
-<form action="/user/login" method="post">
+<div class="container">
+    <form action="/user/login" method="post">
+        <h1>Login</h1>
+        <hr>
 
-    <input type="email" name="<?= USER_EMAIL ?>" placeholder="user@email.com">
-    <input type="password" name="<?= USER_PASSWORD ?>" placeholder="Password">
+        <div class="form-group">
+            <label for="<?= USER_EMAIL?>">Email</label>
+            <input type="email" class="form-control" name="<?= USER_EMAIL ?>" placeholder="user@email.com">
+        </div>
 
-    <button type="submit">Login</button>
+        <div class="form-group">
+            <label for="<?= USER_PASSWORD?>">Password</label>
+            <input type="password" class="form-control" name="<?= USER_PASSWORD ?>" placeholder="Password">
+        </div>
 
-</form>
+        <button class="btn btn-primary" type="submit">Login</button>
+
+    </form>
+</div>

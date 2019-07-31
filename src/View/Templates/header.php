@@ -22,25 +22,13 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/products">Home <span class="sr-only"></span></a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="/products"></a>
+                    <a class="nav-link" href="/user/login">Login</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/user/orders" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        MyAccount
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/user/orders">Orders</a>
-                        <a class="dropdown-item" href="/user/uploads">Uploads</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/user/logout">Logout</a>
-                    </div>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/user/register">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/product/upload">Upload</a>
                 </li>
             </ul>
         </div>
