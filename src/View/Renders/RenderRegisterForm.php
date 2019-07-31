@@ -9,7 +9,7 @@ class RenderRegisterForm extends AbstractRender
 {
     public function render()
     {
-        require_once "src/View/Templates/header.php";
+        $this->renderHeader();
         require_once "src/View/Templates/register-form.php";
         require_once "src/View/Templates/footer.php";
     }

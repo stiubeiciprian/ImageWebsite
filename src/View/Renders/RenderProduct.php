@@ -3,6 +3,7 @@
 
 namespace App\View\Renders;
 
+use App\Core\Session;
 use App\Model\Domain\Product;
 
 /**
@@ -31,7 +32,7 @@ class RenderProduct extends AbstractRender
     public function render()
     {
         $product = $this->product;
-        require_once "src/View/Templates/header.php";
+        $this->renderHeader();
         require_once "src/View/Templates/product-page.php";
         require_once "src/View/Templates/footer.php";
     }
