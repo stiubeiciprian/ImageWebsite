@@ -6,8 +6,12 @@ namespace App\Controller;
 use App\Core\Request;
 use App\Core\Session;
 use App\Model\Domain\User;
+use App\Model\FormMappers\LoginFormMapper;
+use App\Model\FormMappers\RegisterFormMapper;
+use App\Model\Persistence\Mapper\UserMapper;
 use App\Model\Persistence\PersistenceFactory;
 use App\View\Renders\RenderLoginForm;
+use App\View\Renders\RenderPageNotFound;
 use App\View\Renders\RenderProfile;
 use App\View\Renders\RenderRegisterForm;
 
@@ -18,39 +22,27 @@ use App\View\Renders\RenderRegisterForm;
 class UserController
 {
     /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * @var Session
-     */
-    private $session;
-
-
-
-    /**
      * UserController constructor.
      */
-    public function __construct(Request $request, Session $session)
+    public function __construct()
     {
-      $this->request = $request;
-      $this->session = $session;
+
     }
 
+
     /**
-     * Redirect according to request method.
+     * Redirect to a login method according to request method.
      */
     public function login() : void
     {
-        $requestMethod = $this->request->getMethod();
-
-        if ($requestMethod == "GET"){
+        if ("GET" == Request::getMethod()) {
             $this->loginGet();
+            return;
         }
 
-        if($requestMethod == "POST"){
+        if("POST" == Request::getMethod()) {
             $this->loginPost();
+            return;
         }
     }
 
@@ -59,17 +51,31 @@ class UserController
      */
     private function loginPost() : void
     {
-        //TODO add form mapper
-        $postData = $this->request->getPost();
-        $userEmail = $postData[USER_EMAIL];
-        $userPassword = $postData[USER_PASSWORD];
+        // Transfer user form data into User instance
+        $formData = Request::getPost();
+        $loggingUser = LoginFormMapper::mapToObject($formData);
 
-        $user= PersistenceFactory::createFinder(User::class)>findByEmail($userEmail);
-        $userId = $user->getId();
 
-        $this->session->setSessionValue(SESSION_USER_ID, $userId);
+        // Check login data
+        $actualUser = PersistenceFactory::createFinder(User::class)->findByEmail($loggingUser->getEmail());
 
+        if($actualUser->getId() == null) {
+            header("Location: /user/login");
+            die();
+        }
+
+        if($loggingUser->getPassword() != $actualUser->getPassword()){
+            header("Location: /user/login");
+            die();
+        }
+
+
+        // Set user id in session
+        Session::setSessionValue(SESSION_USER_ID, $actualUser->getId());
+
+        // Redirect to user orders
         header("Location: /user/orders");
+        die();
     }
 
     /**
@@ -82,32 +88,78 @@ class UserController
     }
 
 
-
     /**
      * Log out user in session.
      */
     public function logout() : void
     {
-        $this->session->closeSession();
+        Session::closeSession();
+        header("Location: /products");
+        die();
+    }
+
+
+
+
+
+
+
+
+    /**
+     * Redirect to a register method according to request method.
+     */
+    public function register()
+    {
+        if ("GET" == Request::getMethod()) {
+            $this->registerGet();
+            return;
+        }
+
+        if("POST" == Request::getMethod()) {
+            $this->registerPost();
+            return;
+        }
     }
 
     /**
      * Register user.
      */
-    public function register()
+    private function registerPost()
+    {
+        // Transfer user form data into User instance
+        $formData = Request::getPost();
+        $user = RegisterFormMapper::mapToObject($formData);
+
+        // TODO Validate form data
+
+        // Save user to database
+        $userMapper = PersistenceFactory::createMapper(User::class);
+        $userMapper->save($user);
+
+
+        header("Location: /user/login");
+        die();
+    }
+
+    /**
+     * Display register form.
+     */
+    private function registerGet()
     {
         $renderer = new RenderRegisterForm();
         $renderer->render();
     }
+
 
     /**
      * Display uploads.
      */
     public function showUploads()
     {
-        if(!$this->session->isSessionSet()){
-            //TODO add renderer for Page not found.
-            echo "Page not found.";
+        if(!Session::isSessionKeySet(SESSION_USER_ID)){
+            $renderer = new RenderPageNotFound();
+            $renderer->render();
+            return;
         }
 
         $renderer = new RenderProfile();
@@ -119,11 +171,11 @@ class UserController
      */
     public function showOrders() : void
     {
-        if(!$this->session->isSessionSet()){
-            //TODO add renderer for Page not found.
-            echo "Page not found.";
+        if(!Session::isSessionKeySet(SESSION_USER_ID)){
+            $renderer = new RenderPageNotFound();
+            $renderer->render();
+            return;
         }
-
 
         $renderer = new RenderProfile();
         $renderer->render();
