@@ -42,7 +42,7 @@ class Session
      * @param string $key
      * @return mixed
      */
-    public static function getSessionValue(string $key) : mixed
+    public static function getSessionValue(string $key)
     {
         return $_SESSION[$key];
     }

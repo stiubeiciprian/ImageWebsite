@@ -162,7 +162,9 @@ class UserController
             return;
         }
 
-        $renderer = new RenderProfile();
+        $productList = PersistenceFactory::createFinder(Product::class)->findByUserId(Session::getSessionValue(SESSION_USER_ID));
+
+        $renderer = new RenderProfile($productList);
         $renderer->render();
     }
 
