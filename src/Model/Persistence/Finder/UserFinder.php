@@ -22,15 +22,15 @@ class UserFinder extends AbstractFinder
      */
     public function findById(int $id): User
     {
-        $sql = "SELECT * FROM ". SQL_USER_TABLE . " WHERE " . SQL_USER_ID . "=?";
+        $sql = "SELECT * FROM user WHERE id=?";
 
         $statement = $this->getPdo()->prepare($sql);
         $statement->bindValue(1, $id, PDO::PARAM_INT);
         $statement->execute();
 
-        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        $fetchResult = $statement->fetch(PDO::FETCH_ASSOC);
 
-        return $this->translateToUser($row);
+        return $this->translateToUser($fetchResult);
     }
 
     /**
@@ -40,32 +40,34 @@ class UserFinder extends AbstractFinder
      */
     public function findByEmail(string $email): User
     {
-        $sql = "SELECT * FROM ". SQL_USER_TABLE ." WHERE ". SQL_USER_EMAIL . "=?";
+        $sql = "SELECT * FROM user WHERE email=?";
 
         $statement = $this->getPdo()->prepare($sql);
         $statement->bindValue(1, $email, PDO::PARAM_STR);
         $statement->execute();
 
-        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        $fetchResult = $statement->fetch(PDO::FETCH_ASSOC);
 
-        return $this->translateToUser($row);
+        return $this->translateToUser($fetchResult);
     }
 
 
     /**
      * Creates a user from the given associative array.
-     * @param array $row
+     * @param array $fetchResult
      * @return User
      */
-    private function translateToUser(array $row): User
+    private function translateToUser($fetchResult): User
     {
-        $user = new User(
-            $row[SQL_USER_ID],
-            $row[SQL_USER_NAME],
-            $row[SQL_USER_EMAIL],
-            $row[SQL_USER_PASSWORD]
-        );
+        if (false == $fetchResult) {
+            return new User(0, '', '', '');
+        }
 
-        return $user;
+        return new User(
+            $fetchResult[SQL_USER_ID],
+            $fetchResult[SQL_USER_NAME],
+            $fetchResult[SQL_USER_EMAIL],
+            $fetchResult[SQL_USER_PASSWORD]
+        );
     }
 }

@@ -82,6 +82,9 @@ class PersistenceFactory
      */
     private static function getMapperClassName(string $entityClass) : string
     {
+        $entityClass = explode('\\', $entityClass);
+        $entityClass = array_pop($entityClass);
+
         return "\\App\\Model\\Persistence\\Mapper\\".$entityClass."Mapper";
     }
 

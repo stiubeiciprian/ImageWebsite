@@ -22,15 +22,15 @@ class ProductFinder extends AbstractFinder
      */
     public function findById(int $id) : Product
     {
-        $sql = "SELECT * FROM ". SQL_PRODUCT_TABLE . " WHERE " . SQL_PRODUCT_ID . "=?";
+        $sql = "SELECT * FROM product WHERE product_id=?";
 
         $statement = $this->getPdo()->prepare($sql);
         $statement->bindValue(1, $id, PDO::PARAM_INT);
         $statement->execute();
 
-        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        $fetchResult = $statement->fetch(PDO::FETCH_ASSOC);
 
-        return $this->translateToProduct($row);
+        return $this->translateToProduct($fetchResult);
     }
 
     /**
@@ -38,35 +38,47 @@ class ProductFinder extends AbstractFinder
      */
     public function getAll() : array
     {
-        $sql = "SELECT * FROM ". SQL_PRODUCT_TABLE;
+        $sql = "SELECT * FROM product";
 
         $statement = $this->getPdo()->prepare($sql);
         $statement->execute();
 
-        $productsList = $statement->fetchAll();
+        $productsList = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $this->translateToProductArray($productsList);
+    }
+
+    public function findByUserId(int $id) : array
+    {
+        $sql = "SELECT * FROM product WHERE user_id=?";
+
+        $statement = $this->getPdo()->prepare($sql);
+        $statement->bindValue(1, $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $productsList = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         return $this->translateToProductArray($productsList);
     }
 
     /**
      * Creates product from given associative array.
-     * @param array $row
+     * @param array $productFetchResult
+     * @param array $tierFetchList
      * @return Product
      */
-    private function translateToProduct(array $row) : Product
+    private function translateToProduct(array $productFetchResult, array $tierFetchList = []) : Product
     {
-        $product = new Product(
-            $row[SQL_PRODUCT_ID],
-            $row[SQL_PRODUCT_USER_ID],
-            $row[SQL_PRODUCT_TITLE],
-            $row[SQL_PRODUCT_DESCRIPTION],
-            [],
-            $row[SQL_PRODUCT_CAMERA_SPECS],
-            $row[SQL_PRODUCT_CAPTURE_DATE],
-            $row[SQL_PRODUCT_THUMBNAIL_PATH]
-        );
-
-        return $product;
+            return  new Product(
+                $productFetchResult[SQL_PRODUCT_ID],
+                $productFetchResult[SQL_PRODUCT_USER_ID],
+                $productFetchResult[SQL_PRODUCT_TITLE],
+                $productFetchResult[SQL_PRODUCT_DESCRIPTION],
+                $tierFetchList,
+                $productFetchResult[SQL_PRODUCT_CAMERA_SPECS],
+                $productFetchResult[SQL_PRODUCT_CAPTURE_DATE],
+                $productFetchResult[SQL_PRODUCT_THUMBNAIL_PATH]
+            );
     }
 
     /**
