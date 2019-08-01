@@ -27,6 +27,23 @@ class TagFinder extends AbstractFinder
         return $this->translateToTag($fetchResult);
     }
 
+    /**
+     * Returns tag with given name or with id 0 if not found.
+     * @param int $id
+     * @return Tag
+     */
+    public function findbyName(string $tagName): Tag
+    {
+        $sql = "SELECT * FROM tag WHERE name=?";
+
+        $statement = $this->getPdo()->prepare($sql);
+        $statement->bindValue(1, $tagName, PDO::PARAM_INT);
+        $statement->execute();
+
+        $fetchResult = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $this->translateToTag($fetchResult);
+    }
 
     /**
      * @param Tag $tag

@@ -136,4 +136,70 @@ class Product
     {
         return $this->thumbnailPath;
     }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param int $userId
+     */
+    public function setUserId(int $userId): void
+    {
+        $this->userId = $userId;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @param array $tags
+     */
+    public function setTags(array $tags): void
+    {
+        $this->tags = $tags;
+    }
+
+    /**
+     * @param string $cameraSpecs
+     */
+    public function setCameraSpecs(string $cameraSpecs): void
+    {
+        $this->cameraSpecs = $cameraSpecs;
+    }
+
+    /**
+     * @param string $captureDate
+     */
+    public function setCaptureDate(string $captureDate): void
+    {
+        $this->captureDate = $captureDate;
+    }
+
+    /**
+     * @param string $thumbnailPath
+     */
+    public function setThumbnailPath(string $thumbnailPath): void
+    {
+        $this->thumbnailPath = $thumbnailPath;
+    }
+
+
 }

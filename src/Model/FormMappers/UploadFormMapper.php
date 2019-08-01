@@ -19,7 +19,7 @@ class UploadFormMapper
             Session::getSessionValue(SESSION_USER_ID),
             $formArray[IMAGE_NAME],
             $formArray[IMAGE_DESCRIPTION],
-            [],
+            $formArray[IMAGE_TAGS],
             $formArray[IMAGE_CAMERA_SPECS],
             $formArray[IMAGE_DATE],
             ''

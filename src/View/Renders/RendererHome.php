@@ -3,9 +3,6 @@
 
 namespace App\View\Renders;
 
-use App\Core\Session;
-use App\View\Renders\AbstractRender;
-
 class RendererHome extends  AbstractRender
 {
     /**

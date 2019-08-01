@@ -32,6 +32,7 @@ class RenderProduct extends AbstractRender
     public function render()
     {
         $product = $this->product;
+        $tierList = $this->tierList;
         $this->renderHeader();
         require_once "src/View/Templates/product-page.php";
         require_once "src/View/Templates/footer.php";

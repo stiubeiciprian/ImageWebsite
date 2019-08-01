@@ -28,20 +28,10 @@ function validateCommand(array $payload) : array
     }
 
     // Validate input file
-    if (isset($payload['input-file']) && !file_exists($payload['input-file'])) {
-        $errors[] = ERROR_IMAGE_FILE;
-    } elseif (isset($payload['input-file']) && validMimeType($payload['input-file'])) {
+    if (isset($payload['input-file']) && !validMimeType($payload['input-file'])) {
         $errors[] = ERROR_FILE_TYPE;
     }
 
-
-    // Validate output file
-    if (isset($payload['output-file']) && !validFilePath($payload['output-file'])) {
-        $errors[] = ERROR_SAVE_IMAGE;
-    }
-    elseif (isset($payload['output-file']) && !validFileType($payload['output-file'])) {
-        $errors[] = ERROR_FILE_TYPE;
-    }
 
     // Validate watermark
 
@@ -111,7 +101,7 @@ function validFileType(string $filePath) : bool
     $filePath = explode('.', $filePath);
     $extension = mb_strtolower(end($filePath));
 
-    return in_array($extension, SUPPORTED_EXTENSIONS);
+    return true; //in_array($extension, SUPPORTED_EXTENSIONS);
 }
 
 /**
@@ -122,8 +112,10 @@ function validFileType(string $filePath) : bool
  */
 function validFilePath(string $path) : bool
 {
+
     preg_match("/(?<path>.*\/)*(?<file>\w+\..+)/",$path, $matches);
 
+    return true;
     return file_exists($matches['path']) || $matches['path'] == "";
 
 }

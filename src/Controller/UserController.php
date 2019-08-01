@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Core\Request;
 use App\Core\Session;
+use App\Model\Domain\OrderItem;
 use App\Model\Domain\User;
 use App\Model\FormMappers\LoginFormMapper;
 use App\Model\FormMappers\RegisterFormMapper;
@@ -12,7 +13,8 @@ use App\Model\Persistence\Mapper\UserMapper;
 use App\Model\Persistence\PersistenceFactory;
 use App\View\Renders\RenderLoginForm;
 use App\View\Renders\RenderPageNotFound;
-use App\View\Renders\RenderProfile;
+use App\View\Renders\RenderProfileOrders;
+use App\View\Renders\RenderProfileUploads;
 use App\View\Renders\RenderRegisterForm;
 
 /**
@@ -63,7 +65,6 @@ class UserController
         $formData = $this->request->getPost();
         $loggingUser = LoginFormMapper::mapToObject($formData);
 
-
         // Check login data
         $actualUser = PersistenceFactory::createFinder(User::class)->findByEmail($loggingUser->getEmail());
 
@@ -72,7 +73,8 @@ class UserController
             die();
         }
 
-        if($loggingUser->getPassword() != $actualUser->getPassword()){
+        // Verify password
+        if(!$this->verifyPassword($loggingUser->getPassword(), $actualUser->getPassword())){
             header("Location: /user/login");
             die();
         }
@@ -84,6 +86,11 @@ class UserController
         // Redirect to user orders
         header("Location: /products");
         die();
+    }
+
+    private function verifyPassword($passwordToVerify, $actualPassword) : bool
+    {
+        return password_verify($passwordToVerify, $actualPassword);
     }
 
     /**
@@ -135,7 +142,9 @@ class UserController
         $formData = $this->request->getPost();
         $user = RegisterFormMapper::mapToObject($formData);
 
-        // TODO Validate form data
+        // Hash password
+        $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
+
 
         // Save user to database
         $userMapper = PersistenceFactory::createMapper(User::class);
@@ -163,9 +172,9 @@ class UserController
     {
         $this->hasAccess();
 
-        $productList = PersistenceFactory::createFinder(Product::class)->findByUserId(Session::getSessionValue(SESSION_USER_ID));
+        $productList = PersistenceFactory::createFinder(Product::class)->findByUserId($this->session->getSessionValue(SESSION_USER_ID));
 
-        $renderer = new RenderProfile($productList);
+        $renderer = new RenderProfileUploads($productList);
         $renderer->render();
     }
 
@@ -176,7 +185,10 @@ class UserController
     {
         $this->hasAccess();
 
-        $renderer = new RenderProfile();
+
+        $productList = PersistenceFactory::createFinder(OrderItem::class)->findByUserId($this->session->getSessionValue(SESSION_USER_ID));
+
+        $renderer = new RenderProfileOrders($productList);
         $renderer->render();
     }
 

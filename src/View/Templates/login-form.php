@@ -5,12 +5,12 @@
 
         <div class="form-group">
             <label for="<?= USER_EMAIL?>">Email</label>
-            <input type="email" class="form-control" name="<?= USER_EMAIL ?>" placeholder="user@email.com">
+            <input type="email" class="form-control" name="<?= USER_EMAIL ?>" placeholder="user@email.com" required>
         </div>
 
         <div class="form-group">
             <label for="<?= USER_PASSWORD?>">Password</label>
-            <input type="password" class="form-control" name="<?= USER_PASSWORD ?>" placeholder="Password">
+            <input type="password" class="form-control" name="<?= USER_PASSWORD ?>" placeholder="Password" required>
         </div>
 
         <button class="btn btn-primary" type="submit">Login</button>

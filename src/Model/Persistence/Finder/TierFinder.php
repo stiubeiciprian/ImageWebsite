@@ -17,17 +17,31 @@ class TierFinder extends AbstractFinder
      * @param $productId
      * @return array
      */
-    public function findByProductId($productId) : array
+    public function findByProductId(int $productId) : array
     {
         $sql = "SELECT * FROM tier WHERE product_id=?";
 
         $statement = $this->getPdo()->prepare($sql);
-        $statement->bindParam(1, $productID, PDO::PARAM_INT);
+        $statement->bindParam(1, $productId, PDO::PARAM_INT);
         $statement->execute();
 
         $tiersList = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         return $this->translateToTierArray($tiersList);
+    }
+
+
+    public function findById(int $id) : Tier
+    {
+        $sql = "SELECT * FROM tier WHERE id=?";
+
+        $statement = $this->getPdo()->prepare($sql);
+        $statement->bindParam(1, $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $tier = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $this->translateToTier($tier);
     }
 
     /**
@@ -53,6 +67,8 @@ class TierFinder extends AbstractFinder
      */
     private function translateToTierArray(array $tiers) : array
     {
+        $tiersArray = [];
+
         foreach ($tiers as $item){
             $tiersArray[] = $this->translateToTier($item);
         }

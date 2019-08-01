@@ -6,7 +6,7 @@ namespace App\View\Renders;
 use App\Core\Session;
 use App\View\Renders\AbstractRender;
 
-class RenderProfile extends AbstractRender
+class RenderProfileUploads extends AbstractRender
 {
 
     /**
@@ -22,8 +22,10 @@ class RenderProfile extends AbstractRender
     public function render()
     {
         $productList = $this->productList;
+        if(!isset($ordersList))
+            $ordersList = [];
         $this->renderHeader();
-        require_once "src/View/Templates/profile-page.php";
+        require_once "src/View/Templates/uploads-page.php";
         require_once "src/View/Templates/footer.php";
     }
 }

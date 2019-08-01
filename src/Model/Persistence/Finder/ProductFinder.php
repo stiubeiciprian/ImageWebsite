@@ -22,7 +22,7 @@ class ProductFinder extends AbstractFinder
      */
     public function findById(int $id) : Product
     {
-        $sql = "SELECT * FROM product WHERE product_id=?";
+        $sql = "SELECT * FROM product WHERE id=?";
 
         $statement = $this->getPdo()->prepare($sql);
         $statement->bindValue(1, $id, PDO::PARAM_INT);
@@ -32,6 +32,20 @@ class ProductFinder extends AbstractFinder
 
         return $this->translateToProduct($fetchResult);
     }
+
+    public function findByUserId(int $id) : array
+    {
+        $sql = "SELECT * FROM product WHERE user_id=?";
+
+        $statement = $this->getPdo()->prepare($sql);
+        $statement->bindValue(1, $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $productsList = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $this->translateToProductArray($productsList);
+    }
+
 
     /**
      * @return array
@@ -48,18 +62,6 @@ class ProductFinder extends AbstractFinder
         return $this->translateToProductArray($productsList);
     }
 
-    public function findByUserId(int $id) : array
-    {
-        $sql = "SELECT * FROM product WHERE user_id=?";
-
-        $statement = $this->getPdo()->prepare($sql);
-        $statement->bindValue(1, $id, PDO::PARAM_INT);
-        $statement->execute();
-
-        $productsList = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        return $this->translateToProductArray($productsList);
-    }
 
     /**
      * Creates product from given associative array.
@@ -88,6 +90,8 @@ class ProductFinder extends AbstractFinder
      */
     private function translateToProductArray(array $products) : array
     {
+        $productsArray = [];
+
         foreach ($products as $item){
             $productsArray[] = $this->translateToProduct($item);
         }
