@@ -24,11 +24,16 @@ use App\View\Renders\RenderUploadForm;
 class ProductController
 {
 
+    private $request;
+    private $session;
+
     /**
      * UserController constructor.
      */
-    public function __construct()
+    public function __construct($request, $session)
     {
+        $this->request = $request;
+        $this->session = $session;
     }
 
 
@@ -55,7 +60,7 @@ class ProductController
 //        $product = new Product(1,1,"Image", "Description", ['tag1','tag2'],'cameraSpecs', 'date', 'path');
 //        $tierList = [ new Tier(1,1,'12x230',32,'Path','PathWOwatermark')];
 
-        $urlQuery = Request::getQuery();
+        $urlQuery = $this->request->getQuery();
 
         //TODO add error page if query is not set.
 
@@ -77,11 +82,7 @@ class ProductController
         // TODO: If user is logged in -> buy product ( download selected tier )
         //       Otherwise -> redirect to login page
 
-        if(!Session::isSessionKeySet(SESSION_USER_ID)){
-            $renderer = new RenderLoginForm();
-            $renderer->render();
-            return;
-        }
+        $this->hasAccess();
     }
 
     /**
@@ -89,12 +90,12 @@ class ProductController
      */
     public function uploadProduct()
     {
-        if ("GET" == Request::getMethod()) {
+        if ("GET" == $this->request->getMethod()) {
             $this->uploadGet();
             return;
         }
 
-        if ("POST" == Request::getMethod()) {
+        if ("POST" == $this->request->getMethod()) {
             $this->uploadPost();
             return;
         }
@@ -106,7 +107,7 @@ class ProductController
      */
     public function uploadPost()
     {
-        $formData = Request::getPost();
+        $formData = $this->request->getPost();
         $product = UploadFormMapper::mapToObject($formData);
 
         PersistenceFactory::createMapper(Product::class)->save($product);
@@ -118,14 +119,24 @@ class ProductController
      */
     public function uploadGet()
     {
-        if(!Session::isSessionKeySet(SESSION_USER_ID)){
-            $renderer = new RenderPageNotFound();
-            $renderer->render();
-            return;
-        }
+        $this->hasAccess();
+
         $tagsList = PersistenceFactory::createFinder(Tag::class)->getAll();
 
         $renderer = new RenderUploadForm($tagsList);
         $renderer->render();
     }
+
+    /**
+     * @return bool
+     */
+    private function hasAccess()
+    {
+        if(!$this->session->isSessionKeySet(SESSION_USER_ID)){
+            $renderer = new RenderPageNotFound();
+            $renderer->render();
+            die();
+        }
+    }
 }
+

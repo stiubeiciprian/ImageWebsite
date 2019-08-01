@@ -15,15 +15,13 @@ class Session
      */
     public function __construct()
     {
-        if (!isset($_SESSION)) {
             $this->openSession();
-        }
     }
 
     /**
      * Initialize session.
      */
-    public static function openSession()
+    public function openSession()
     {
         session_start();
     }
@@ -32,7 +30,7 @@ class Session
      * @param string $key
      * @param string $value
      */
-    public static function setSessionValue(string $key, string $value)
+    public function setSessionValue(string $key, string $value)
     {
         $_SESSION[$key] = $value;
     }
@@ -42,7 +40,7 @@ class Session
      * @param string $key
      * @return mixed
      */
-    public static function getSessionValue(string $key)
+    public function getSessionValue(string $key)
     {
         return $_SESSION[$key];
     }
@@ -51,7 +49,7 @@ class Session
      * Checks if the session key is set.
      * @return bool
      */
-    public static function isSessionKeySet(string $key) : bool
+    public function isSessionKeySet(string $key) : bool
     {
         return isset($_SESSION[$key]);
     }
@@ -59,7 +57,7 @@ class Session
     /**
      * Unset session.
      */
-    public static function closeSession()
+    public function closeSession()
     {
         session_destroy();
     }

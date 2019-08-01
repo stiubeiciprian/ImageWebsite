@@ -21,12 +21,20 @@ use App\View\Renders\RenderRegisterForm;
  */
 class UserController
 {
+
+    private $request;
+    private $session;
+
+
     /**
      * UserController constructor.
+     * @param $request
+     * @param $session
      */
-    public function __construct()
+    public function __construct($request, $session)
     {
-
+        $this->request = $request;
+        $this->session = $session;
     }
 
 
@@ -35,12 +43,12 @@ class UserController
      */
     public function login() : void
     {
-        if ("GET" == Request::getMethod()) {
+        if ("GET" == $this->request->getMethod()) {
             $this->loginGet();
             return;
         }
 
-        if("POST" == Request::getMethod()) {
+        if("POST" == $this->request->getMethod()) {
             $this->loginPost();
             return;
         }
@@ -52,7 +60,7 @@ class UserController
     private function loginPost() : void
     {
         // Transfer user form data into User instance
-        $formData = Request::getPost();
+        $formData = $this->request->getPost();
         $loggingUser = LoginFormMapper::mapToObject($formData);
 
 
@@ -71,10 +79,10 @@ class UserController
 
 
         // Set user id in session
-        Session::setSessionValue(SESSION_USER_ID, $actualUser->getId());
+        $this->session->setSessionValue(SESSION_USER_ID, $actualUser->getId());
 
         // Redirect to user orders
-        header("Location: /user/orders");
+        header("Location: /products");
         die();
     }
 
@@ -93,13 +101,10 @@ class UserController
      */
     public function logout() : void
     {
-        Session::closeSession();
+        $this->session->closeSession();
         header("Location: /products");
         die();
     }
-
-
-
 
 
 
@@ -110,12 +115,12 @@ class UserController
      */
     public function register()
     {
-        if ("GET" == Request::getMethod()) {
+        if ("GET" == $this->request->getMethod()) {
             $this->registerGet();
             return;
         }
 
-        if("POST" == Request::getMethod()) {
+        if("POST" == $this->request->getMethod()) {
             $this->registerPost();
             return;
         }
@@ -127,7 +132,7 @@ class UserController
     private function registerPost()
     {
         // Transfer user form data into User instance
-        $formData = Request::getPost();
+        $formData = $this->request->getPost();
         $user = RegisterFormMapper::mapToObject($formData);
 
         // TODO Validate form data
@@ -156,11 +161,7 @@ class UserController
      */
     public function showUploads()
     {
-        if(!Session::isSessionKeySet(SESSION_USER_ID)){
-            $renderer = new RenderPageNotFound();
-            $renderer->render();
-            return;
-        }
+        $this->hasAccess();
 
         $productList = PersistenceFactory::createFinder(Product::class)->findByUserId(Session::getSessionValue(SESSION_USER_ID));
 
@@ -173,13 +174,21 @@ class UserController
      */
     public function showOrders() : void
     {
-        if(!Session::isSessionKeySet(SESSION_USER_ID)){
-            $renderer = new RenderPageNotFound();
-            $renderer->render();
-            return;
-        }
+        $this->hasAccess();
 
         $renderer = new RenderProfile();
         $renderer->render();
+    }
+
+    /**
+     * @return bool
+     */
+    private function hasAccess()
+    {
+        if(!$this->session->isSessionKeySet(SESSION_USER_ID)){
+            $renderer = new RenderPageNotFound();
+            $renderer->render();
+            die();
+        }
     }
 }

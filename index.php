@@ -13,19 +13,9 @@ use App\Controller\ProductController;
 use App\Controller\UserController;
 
 
-Session::openSession();
+$router = new Router();
 
-$userController = new UserController();
-$productController = new ProductController();
+$router->redirect();
 
 
-$urlMap = require_once "routeConfig.php";
-
-$router = new Router($urlMap);
-
-$uri = Request::getUrl();
-
-if( isset($urlMap[$uri])) {
-    call_user_func($urlMap[$uri]);
-}
 

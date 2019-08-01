@@ -12,15 +12,18 @@ class Request
     /**
      * @return string
      */
-    public static function getUrl() : string
+    public function getUrl() : string
     {
-        return $_SERVER["REQUEST_URI"];
+        $uri = $_SERVER["REQUEST_URI"];
+        $uri = explode('?',$uri);
+        return array_shift($uri);
+
     }
 
     /**
      * @return array
      */
-    public static function getQuery() : array
+    public function getQuery() : array
     {
         return  $_GET;
     }
@@ -28,7 +31,7 @@ class Request
     /**
      * @return array
      */
-    public static function getPost() : array
+    public function getPost() : array
     {
         return $_POST;
     }
@@ -36,7 +39,7 @@ class Request
     /**
      * @return array
      */
-    public static function getFiles() : array
+    public function getFiles() : array
     {
         return $_FILES;
     }
@@ -44,7 +47,7 @@ class Request
     /**
      * @return string
      */
-    public static function getMethod() : string
+    public function getMethod() : string
     {
         return  $_SERVER["REQUEST_METHOD"];
     }
