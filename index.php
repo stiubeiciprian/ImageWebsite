@@ -3,24 +3,15 @@ ini_set('display_errors', 'On');
 
 require_once "vendor/autoload.php";
 
-use App\Router\Request;
-use App\Router\Router;
+require_once "constants.php";
+require_once "src/Model/Persistence/propertyNames.php";
 
-use App\Controller\ProductController;
-use App\Controller\UserController;
+use App\Core\Router;
 
 
-//TODO: wrap in class
+$router = new Router();
 
-$productController = new ProductController();
-$userController = new UserController();
+$router->redirect();
 
-$request = new Request();
-$router = new Router($request);
 
-$urlMap = require_once "routeConfig.php";
-
-if( isset($urlMap[$request->getUrl()]))
-    call_user_func($urlMap[$request->getUrl()]);
-else echo "Page does not exist.";
 

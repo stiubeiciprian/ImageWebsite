@@ -3,8 +3,6 @@
 
 namespace App\View\Renders;
 
-use App\View\Renders\AbstractRender;
-
 class RendererHome extends  AbstractRender
 {
     /**
@@ -22,7 +20,10 @@ class RendererHome extends  AbstractRender
      */
     public function render()
     {
+        $this->renderHeader();
         $productList = $this->productList;
         require_once "src/View/Templates/home-page.php";
+
+        require_once "src/View/Templates/footer.php";
     }
 }

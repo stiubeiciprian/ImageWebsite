@@ -14,15 +14,9 @@ require_once "Output/showHelp.php";
 require_once "Output/showSuccess.php";
 
 
-function main($argc, $argv) {
+function transform($argc, $argv) {
 
-    $payload = convertCLInputToPayload($argc,$argv);
-
-
-    if( isHelp($payload) ) {
-        showHelp();
-        return;
-    }
+    $payload = $argv;
 
     $validationErrors = validateCommand($payload);
 
@@ -43,8 +37,7 @@ function main($argc, $argv) {
     } catch (ImagickException $exception) {
         showErrors("Imagick error" . $exception->getMessage() );
     }
-    showSuccess($payload);
+
+    return $payload['output-file'];
 
 }
-
-main($argc, $argv);

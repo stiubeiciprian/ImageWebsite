@@ -1,19 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Product</title>
-</head>
-<body>
 
-<?php
+<?php foreach ($tierList as $tier): ?>
+    <div style="background-color: aqua; width: 800px; display: flex; flex-direction: column; margin: 40px;">
+        <img src="<?= $tier->getPathWithWatermark(); ?> ">
+        <h1><?= $tier->getSize() ." - ". $tier->getPrice() . "$";?></h1>
+    </div>
+<?php endforeach; ?>
 
-var_dump($product);
+<form action="/product/buy" method="post">
+    <?php foreach ($tierList as $tier): ?>
+        <input type="radio" name="size" value="<?= $tier->getId(); ?>" checked> <?= $tier->getSize(); ?><br>
+    <?php endforeach; ?>
+    <button type="submit" class="btn btn-primary">Buy</button>
+</form>
 
-?>
-
-</body>
-</html>
